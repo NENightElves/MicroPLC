@@ -16,7 +16,7 @@ class C_74HC595:
         if len(l) > self.datalength:
             raise Exception('length error')
         for _ in l:
-            if _ != 0 or _ != 1:
+            if _ != 0 and _ != 1:
                 raise Exception('value error')
         for _ in l:
             self.SCK.off()
