@@ -4,10 +4,14 @@ import time
 
 class C_74HC595:
 
-    def __init__(self, SER, SCK, RCK, amount=1, delay=10):
+    def __init__(self, SER, SCK, RCK, CE=None, amount=1, delay=10):
         self.SER = Pin(SER, Pin.OUT)
         self.SCK = Pin(SCK, Pin.OUT)
         self.RCK = Pin(RCK, Pin.OUT)
+        if CE:
+            self.CE = Pin(CE, Pin.OUT)
+        else:
+            self.CE = None
         self.amount = amount
         self.datalength = amount*8
         self.delay = delay
@@ -36,13 +40,25 @@ class C_74HC595:
         time.sleep_us(self.delay)
         self.RCK.on()
 
+    def enable(self):
+        if self.CE:
+            self.CE.off()
+
+    def disable(self):
+        if self.CE:
+            self.CE.on()
+
 
 class C_74HC165:
 
-    def __init__(self, Q7, CP, PL, amount=1, delay=10):
+    def __init__(self, Q7, CP, PL, CE=None, amount=1, delay=10):
         self.Q7 = Pin(Q7, Pin.IN)
         self.CP = Pin(CP, Pin.OUT)
         self.PL = Pin(PL, Pin.OUT)
+        if CE:
+            self.CE = Pin(CE, Pin.OUT)
+        else:
+            self.CE = None
         self.amount = amount
         self.datalength = amount*8
         self.delay = delay
@@ -67,3 +83,11 @@ class C_74HC165:
             l.reverse()
             r.extend(l)
         return r
+
+    def enable(self):
+        if self.CE:
+            self.CE.off()
+
+    def disable(self):
+        if self.CE:
+            self.CE.on()
