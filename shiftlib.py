@@ -62,4 +62,5 @@ class C_74HC165:
             time.sleep_us(self.delay)
             self.CP.on()
             time.sleep_us(self.delay)
+        l.reverse()
         return l
