@@ -48,19 +48,22 @@ class C_74HC165:
         self.delay = delay
 
     def read(self) -> list:
-        l = []
+        r = []
         self.CP.on()
         time.sleep_us(self.delay)
         self.PL.off()
         time.sleep_us(self.delay)
         self.PL.on()
         time.sleep_us(self.delay)
-        for _ in range(0, self.datalength):
-            self.CP.off()
-            time.sleep_us(self.delay)
-            l.append(self.Q7.value())
-            time.sleep_us(self.delay)
-            self.CP.on()
-            time.sleep_us(self.delay)
-        l.reverse()
-        return l
+        for _ in range(0, self.amount):
+            l = []
+            for __ in range(0, 8):
+                self.CP.off()
+                time.sleep_us(self.delay)
+                l.append(self.Q7.value())
+                time.sleep_us(self.delay)
+                self.CP.on()
+                time.sleep_us(self.delay)
+            l.reverse()
+            r.extend(l)
+        return r
